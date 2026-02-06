@@ -6,8 +6,8 @@ export default function Home() {
         <span>Welcome. Let’s build your Operating System.
 
 Start by describing:
-	•	how your team works day to day
-	•	or upload the spreadsheets you already use	
+		- how your team works day to day
+		- or upload the spreadsheets you already use	
 
 GURU will guide you, ask the right questions,
 and turn your requests into software.</span>
