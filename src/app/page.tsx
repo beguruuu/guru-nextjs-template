@@ -11,6 +11,7 @@ Start by describing:
 
 GURU will guide you, ask the right questions,
 and turn your requests into software.</span>
+      </main>
     </div>
   );
 }
