@@ -1,11 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import { useEffect, useState } from "react"
-import { ExcelUploader } from "@/components/excel-uploader"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { db } from "@/lib/db"
 import { getStoredWorkspaceId, storeWorkspaceId } from "@/lib/excel"
 
