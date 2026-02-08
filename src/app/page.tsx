@@ -1,48 +1,10 @@
 "use client"
 
 import Image from "next/image"
-import { useEffect, useState } from "react"
-import { db } from "@/lib/db"
-import { getStoredWorkspaceId, storeWorkspaceId } from "@/lib/excel"
+import { DatasetTable } from "@/components/dataset-table"
+import { ExcelUploader } from "@/components/excel-uploader"
 
 export default function Home() {
-  const [workspaceId, setWorkspaceId] = useState<number | null>(null)
-  const [workspaceName, setWorkspaceName] = useState("")
-  const [isCreating, setIsCreating] = useState(false)
-
-  useEffect(() => {
-    const storedId = getStoredWorkspaceId()
-    if (!storedId) return
-    setWorkspaceId(storedId)
-    db.workspaces.get(storedId).then((workspace) => {
-      if (workspace) setWorkspaceName(workspace.name)
-    })
-  }, [])
-
-  const handleCreateWorkspace = async () => {
-    const trimmedName = workspaceName.trim() || "My Workspace"
-    setIsCreating(true)
-    const now = Date.now()
-
-    if (workspaceId) {
-      await db.workspaces.update(workspaceId, {
-        name: trimmedName,
-        updatedAt: now,
-      })
-      setIsCreating(false)
-      return
-    }
-
-    const id = await db.workspaces.add({
-      name: trimmedName,
-      createdAt: now,
-      updatedAt: now,
-    })
-    storeWorkspaceId(id)
-    setWorkspaceId(id)
-    setIsCreating(false)
-  }
-
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-950 via-blue-950 to-slate-900 px-4 py-10 text-white">
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 text-center">
@@ -76,6 +38,16 @@ export default function Home() {
           </p>
         </div>
 
+        <div className="w-full rounded-2xl border border-white/10 bg-white/5 p-6 text-left backdrop-blur-xl">
+          <p className="text-xs font-semibold uppercase tracking-wide text-blue-200/70">
+            Upload Excel
+          </p>
+          <ExcelUploader className="mt-4" />
+        </div>
+
+        <div className="w-full">
+          <DatasetTable />
+        </div>
 
         <p className="text-xs text-blue-200/80">
           GURU will guide you, ask the right questions, and turn your requests

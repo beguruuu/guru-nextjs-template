@@ -7,16 +7,11 @@ import type { ExcelDataset } from "@/lib/db"
 import { cn } from "@/lib/utils"
 
 type ExcelUploaderProps = {
-  workspaceId: number | null
   onImported?: (dataset: ExcelDataset) => void
   className?: string
 }
 
-export function ExcelUploader({
-  workspaceId,
-  onImported,
-  className,
-}: ExcelUploaderProps) {
+export function ExcelUploader({ onImported, className }: ExcelUploaderProps) {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -33,15 +28,11 @@ export function ExcelUploader({
       setError("Please choose an Excel file.")
       return
     }
-    if (!workspaceId) {
-      setError("Create a workspace first.")
-      return
-    }
 
     setIsLoading(true)
     setError(null)
     try {
-      const dataset = await importExcel(selectedFile, workspaceId)
+      const dataset = await importExcel(selectedFile)
       onImported?.(dataset)
       setSelectedFile(null)
       if (inputRef.current) inputRef.current.value = ""
@@ -64,7 +55,7 @@ export function ExcelUploader({
       <Button
         type="button"
         onClick={handleImport}
-        disabled={isLoading || !workspaceId}
+        disabled={isLoading}
         className="w-full"
       >
         {isLoading ? "Importing..." : "Import Excel"}

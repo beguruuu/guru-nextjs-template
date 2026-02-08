@@ -20,28 +20,22 @@ import {
 
 type RowRecord = Record<string, string>
 
-type DatasetTableProps = {
-  workspaceId: number
-}
-
 function formatCell(value: ExcelCellValue) {
   if (value === null) return ""
   return String(value)
 }
 
-export function DatasetTable({ workspaceId }: DatasetTableProps) {
+export function DatasetTable() {
   const [datasets, setDatasets] = useState<ExcelDataset[]>([])
 
   useEffect(() => {
-    const subscription = liveQuery(() =>
-      db.excelDatasets.where("workspaceId").equals(workspaceId).toArray()
-    ).subscribe({
+    const subscription = liveQuery(() => db.excelDatasets.toArray()).subscribe({
       next: (items) => setDatasets(items),
       error: () => setDatasets([]),
     })
 
     return () => subscription.unsubscribe()
-  }, [workspaceId])
+  }, [])
 
   const activeDataset = useMemo(() => {
     return datasets
