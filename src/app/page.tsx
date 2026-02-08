@@ -1,8 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import { DatasetTable } from "@/components/dataset-table"
-import { ExcelUploader } from "@/components/excel-uploader"
 
 export default function Home() {
   return (
@@ -36,17 +34,6 @@ export default function Home() {
             Start by describing how your team works day to day or upload the
             spreadsheets you already use
           </p>
-        </div>
-
-        <div className="w-full rounded-2xl border border-white/10 bg-white/5 p-6 text-left backdrop-blur-xl">
-          <p className="text-xs font-semibold uppercase tracking-wide text-blue-200/70">
-            Upload Excel
-          </p>
-          <ExcelUploader className="mt-4" />
-        </div>
-
-        <div className="w-full">
-          <DatasetTable />
         </div>
 
         <p className="text-xs text-blue-200/80">
